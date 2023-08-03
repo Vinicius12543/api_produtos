@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Cadastro de Produto</title>
+    <style>
+         .yellow-bg{
+             background-color: rgb(232, 221, 17);
+        }
+         .blue-bg{
+            background-color: rgb(0, 128, 255);
+            color: rgb(255, 255, 255);
+        }
+        input::placeholder{
+            color: white;
+        }
+        textarea::placeholder{
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container yellow-bg">
+        <h1>Cadastro de Produto</h1>
+
+        <div class="mb-2">
+            <strong>{{mensagem}}</strong>
+        </div>
+
+        <form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+                <label for="inputNome" class="form-label">Nome</label>
+                <input type="text" class="form-control blue-bg" id="inputNome"
+                placeholder="Digite o Nome do Produto" required formControlName="nome">
+
+                <div class="text-danger" *ngIf="form.nome.touched && form.nome.invalid">
+                    <span *ngIf="form.nome.errors.required">
+                        Por favor, informe o nome do produto
+                    </span>
+                    <span *ngIf="form.nome.errors.pattern">
+                        Por favor, insira somente letras e números, contendo de 8 a 150 caracteres.
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputDescricao" class="form-label">Descrição</label>
+                <textarea class="form-control blue-bg" id="inputDescricao" rows="3" 
+                placeholder="Insira a descrição do produto" formControlName="descricao"></textarea>
+
+                <div class="text-danger" *ngIf="form.descricao.touched && form.descricao.invalid">
+                    <span *ngIf="form.descricao.errors.required">
+                        Por favor, insira a descrição do produto
+                    </span>
+                    <span *ngIf="form.descricao.errors.pattern">
+                        Por favor, insira somente letras e números, contendo de 8 a 500 caracteres.
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputPreco" class="form-label">Preço</label>
+                <input type="number" step="0.01" class="form-control blue-bg" id="inputPreco" 
+                placeholder="Digite o preço do produto" required formControlName="preco">
+
+                <div class="text-danger" *ngIf="form.preco.touched && form.preco.invalid">
+                    <span *ngIf="form.preco.errors.required">
+                        Por favor, insira o preço do produto
+                    </span>
+                    <span *ngIf="form.preco.errors.min">
+                        Insira um números maior ou igual a 1
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputQuantidade" class="form-label">Quantidade</label>
+                <input type="number" class="form-control blue-bg" id="inputQuantidade" 
+                placeholder="Digite a quantidade de produtos" required formControlName="quantidade">
+                
+                <div class="text-danger" *ngIf="form.quantidade.touched && form.preco.invalid">
+                    <span *ngIf="form.quantidade.errors.required">
+                        Por favor insira a quantidade de produtos
+                    </span>
+                    <span *ngIf="form.quantidade.errors.min">
+                        Insira um número maior ou igual a 1
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" 
+            [disabled]="!formCadastro.valid" class="btn btn-primary me-2">Cadastrar</button>
+
+            <a class="btn btn-light" [routerLink]="['/produtos-consulta']">Ir para a consulta</a>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
